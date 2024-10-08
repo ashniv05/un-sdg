@@ -17,17 +17,25 @@
       margin: var(--ddd-spacing-2);
     }
     un-sdg {
+      /*
       margin: var(--ddd-spacing-2);
       border: var(--ddd-border-md);
       border-radius: var(--ddd-radius-lg);
+      */
     }
     un-sdg:hover {
+      /*
       box-shadow: var(--ddd-boxShadow-sm);
+      */
     }
     #example {
       --un-sdg-font-size: var(--ddd-font-size-l);
       background-color: var(--ddd-accent-2);
       color: var(--ddd-primary-17);
+    }
+    .sdc-wrapper {
+      display: flex;
+      flex-wrap: wrap;
     }
   </style>
   <title>un-sdg</title>
@@ -36,15 +44,72 @@
 <body>
   <div id="demo">
     <h1>un-sdg</h1>
+    <button id="random">Randomize Goal</button>
+    <script>
+      document.querySelector('#random').addEventListener('click', function(event) {
+        const randomNumber = Math.floor(Math.random() * 17) + 1; 
+        const sdg = document.getElementById('random-sdg');
+        sdg.setAttribute('goal', randomNumber);
+      });
+    </script>
     <un-sdg 
-      goal="10" 
+      id="random-sdg"
+      goal="2" 
       width="400px"
       height="400px"
+      label="overridden alt text"
       loading="eager"
       fetchpriority="high"
     ></un-sdg>
+
     <h2>Default</h2>
     <un-sdg></un-sdg>
+
+    <h2>un-sdg 1-17, circle, and all</h2>
+    <div class="sdc-wrapper">
+      <un-sdg goal="circle"></un-sdg>
+      <un-sdg goal="all"></un-sdg>
+      <un-sdg goal="1"></un-sdg>
+      <un-sdg goal="2"></un-sdg>
+      <un-sdg goal="3"></un-sdg>
+      <un-sdg goal="4"></un-sdg>
+      <un-sdg goal="5"></un-sdg>
+      <un-sdg goal="6"></un-sdg>
+      <un-sdg goal="7"></un-sdg>
+      <un-sdg goal="8"></un-sdg>
+      <un-sdg goal="9"></un-sdg>
+      <un-sdg goal="10"></un-sdg>
+      <un-sdg goal="11"></un-sdg>
+      <un-sdg goal="12"></un-sdg>
+      <un-sdg goal="13"></un-sdg>
+      <un-sdg goal="14"></un-sdg>
+      <un-sdg goal="15"></un-sdg>
+      <un-sdg goal="16"></un-sdg>
+      <un-sdg goal="17"></un-sdg>
+    </div>
+
+    <h2>un-sdg 1-17, circle, and all with colorOnly set to "true"</h2>
+    <div class="sdc-wrapper">
+      <un-sdg goal="circle" colorOnly="true"></un-sdg>
+      <un-sdg goal="all" colorOnly="true"></un-sdg>
+      <un-sdg goal="1" colorOnly="true"></un-sdg>
+      <un-sdg goal="2" colorOnly="true"></un-sdg>
+      <un-sdg goal="3" colorOnly="true"></un-sdg>
+      <un-sdg goal="4" colorOnly="true"></un-sdg>
+      <un-sdg goal="5" colorOnly="true"></un-sdg>
+      <un-sdg goal="6" colorOnly="true"></un-sdg>
+      <un-sdg goal="7" colorOnly="true"></un-sdg>
+      <un-sdg goal="8" colorOnly="true"></un-sdg>
+      <un-sdg goal="9" colorOnly="true"></un-sdg>
+      <un-sdg goal="10" colorOnly="true"></un-sdg>
+      <un-sdg goal="11" colorOnly="true"></un-sdg>
+      <un-sdg goal="12" colorOnly="true"></un-sdg>
+      <un-sdg goal="13" colorOnly="true"></un-sdg>
+      <un-sdg goal="14" colorOnly="true"></un-sdg>
+      <un-sdg goal="15" colorOnly="true"></un-sdg>
+      <un-sdg goal="16" colorOnly="true"></un-sdg>
+      <un-sdg goal="17" colorOnly="true"></un-sdg>
+    </div>
 
     <!--
     <h2>Slot usage</h2>
