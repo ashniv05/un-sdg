@@ -10,21 +10,26 @@ export class unSdg extends DDDSuper(LitElement) {
 
   constructor() {
     super();
-    this.title = "";
     this.goal = 1;
-    this.imgSrc = "";
-    this.size = 254;
-    this.label = "Example label";
-    this.lazy = true;
+    this.imgSrc = "./lib/svgs/goal-1.svg";
+    this.width = "254px";
+    this.height = "254px";
+    this.label = "Goal 1: No poverty";
+    this.loading = "lazy"
+    this.fetchPriority = "low";
+    this.colorOnly = false;
   }
 
   static get properties() {
     return {
-      title: { type: String },
-      goal: { type: Number },
-      size: { type: Number },
+      goal: { type: String },
+      imgSrc: { type: String },
+      width: { type: String },
+      height: { type: String },
       label: { type: String },
-      label: { type: Boolean },
+      loading: { type: String },
+      fetchPriority: { type: String },
+      colorOnly: { type: Boolean },
     };
   }
 
@@ -33,31 +38,80 @@ export class unSdg extends DDDSuper(LitElement) {
     css`
       :host {
         display: block;
+        /*
         color: var(--ddd-theme-primary);
         background-color: var(--ddd-theme-accent);
         font-family: var(--ddd-font-navigation);
         font-size: var(--un-sdg-font-size, var(--ddd-font-size-s));
+        */
+
       }
-      .wrapper {
+      .svg-wrapper {
+        /*
         margin: var(--ddd-spacing-2);
         padding: var(--ddd-spacing-4);
-      }
-      div {
+        */
         padding: 0;
         margin: 0;
+      }
+      img {
+        width: var(--width, 254px);
+        height: var(--height, 254px);
       }
     `];
   }
 
   updated(changedProperties) {
+    if (changedProperties.has('width')) {
+      this.style.setProperty('--width', this.width);
+    }
+    if (changedProperties.has('height')) {
+      this.style.setProperty('--height', this.height);
+    }
     if (changedProperties.has('goal')) {
       this.updateImageandAlt();
     }
+    if (changedProperties.has('colorOnly')) {
+      this.updateColor();
+    }
+    if (changedProperties.has('loading')) {
+      const loading = this.getAttribute('loading');
+      switch (loading) {
+        case 'lazy':
+          this.loading = "lazy";
+          break;
+        case 'eager':
+          this.loading = "eager";
+          break;
+      }
+    }
+    if (changedProperties.has('fetchPriority')) {
+      const fetchPriority = this.getAttribute('fetchPriority');
+      switch (fetchPriority) {
+        case 'low':
+          this.fetchPriority = "low";
+          break;
+        case 'high':
+          this.fetchPriority = "high";
+          break;
+      }
+    }
   }
 
+  updateColor() {
+
+  }
   updateImageandAlt() {
     const goal = this.getAttribute('goal');
     switch (goal) {
+      case 'circle':
+        this.imgSrc = "./lib/svgs/circle.png";
+        this.label = "Sustainable developments logo";
+        break;
+      case 'all':
+        this.imgSrc = "./lib/svgs/all.svg";
+        this.label = "Goal 1: No poverty, Goal 2: Zero hunger, Goal 3: Good health and well-being, Goal 4: Quality education, Goal 5: Gender equality, Goal 6: Clean water and sanitation, Goal 7: Affordable and clean energy, Goal 8: Decent work and economic growth, Goal 9: Industry, innovation and infrastructure, Goal 10: Reduced inequalities, Goal 11: Sustainable cities and communities, Goal 12: Responsible consumption and production, Goal 13: Climate action, Goal 14: Life below water, Goal 15: Life on land, Goal 16: Peace, justice and strong institutions, Goal 17: Partnerships for the goals";
+        break;
       case '1':
         this.imgSrc = "./lib/svgs/goal-1.svg";
         this.label = "Goal 1: No poverty";
@@ -134,8 +188,9 @@ export class unSdg extends DDDSuper(LitElement) {
       <div class="svg-wrapper">
         <img 
         src="${this.imgSrc}"
-        width="${this.size}"
         alt="${this.label}"
+        loading="${this.loading}"
+        fetchpriority="${this.fetchPriority}"
         />
       </div>
     `;
