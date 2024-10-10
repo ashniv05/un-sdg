@@ -1,6 +1,5 @@
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-new URL('./lib/svgs/goal-1.svg', import.meta.url).href
 
 export class unSdg extends DDDSuper(LitElement) {
 
@@ -12,7 +11,6 @@ export class unSdg extends DDDSuper(LitElement) {
   constructor() {
     super();
     this.goal = "circle";
-    this.imgSrc = "./lib/svgs/circle.png";
     this.width = "254px";
     this.height = "254px";
     this.label = "";
@@ -97,7 +95,7 @@ export class unSdg extends DDDSuper(LitElement) {
     }
     // When a 'goal' is set, update the image, update the alt text, and update the color
     if (changedProperties.has('goal')) {
-      this.updateImage();
+      // this.updateImage();
       this.updateAlt();
       this.updateColor();
     } 
@@ -249,78 +247,22 @@ export class unSdg extends DDDSuper(LitElement) {
         break; 
     }
   }
-  updateImage() {
-    const goal = this.getAttribute('goal');
-    switch (goal) {
-      case 'circle':
-        this.imgSrc = "./lib/svgs/circle.png";
-        break;
-      case 'all':
-        this.imgSrc = "./lib/svgs/all.svg";
-        break;
-      case '1':
-        this.imgSrc = "./lib/svgs/goal-1.svg";
-        break;
-      case '2':
-        this.imgSrc = "./lib/svgs/goal-2.svg";
-        break;
-      case '3':
-        this.imgSrc = "./lib/svgs/goal-3.svg";
-        break;
-      case '4':
-        this.imgSrc = "./lib/svgs/goal-4.svg";
-        break;
-      case '5':
-        this.imgSrc = "./lib/svgs/goal-5.svg";
-        break;
-      case '6':
-        this.imgSrc = "./lib/svgs/goal-6.svg";
-        break;
-      case '7':
-        this.imgSrc = "./lib/svgs/goal-7.svg";
-        break;
-      case '8':
-        this.imgSrc = "./lib/svgs/goal-8.svg";
-        break;
-      case '9':
-        this.imgSrc = "./lib/svgs/goal-9.svg";
-        break;
-      case '10':
-        this.imgSrc = "./lib/svgs/goal-10.svg";
-        break;
-      case '11':
-        this.imgSrc = "./lib/svgs/goal-11.svg";
-        break;
-      case '12':
-        this.imgSrc = "./lib/svgs/goal-12.svg";
-        break;
-      case '13':
-        this.imgSrc = "./lib/svgs/goal-13.svg";
-        break;
-      case '14':
-        this.imgSrc = "./lib/svgs/goal-14.svg";
-        break;
-      case '15':
-        this.imgSrc = "./lib/svgs/goal-15.svg";
-        break;
-      case '16':
-        this.imgSrc = "./lib/svgs/goal-16.svg";
-        break;
-      case '17':
-        this.imgSrc = "./lib/svgs/goal-17.svg";
-        break;
-    }
-  }
 
-  // class="${this.isImageVisible ? '' : 'hidden'}"
-  // class="${this.isImageVisible ? valueIfTrue : valueIfFalse}"
   render() {
+    let imgSrc = new URL(`../lib/svgs/goal-${this.goal}.svg`, import.meta.url).href;
+    if (this.goal === 'all') {
+      imgSrc = new URL(`../lib/svgs/${this.goal}.svg`, import.meta.url).href;
+    }
+    else if (this.goal === 'circle') {
+      imgSrc = new URL(`../lib/svgs/${this.goal}.png`, import.meta.url).href;
+    }
+
     return html`
       <div class="svg-wrapper">
         <!-- Ternary. Only run <img/> if this.isImageVisible is true -->
         ${this.isImageVisible ? html `
           <img 
-          src="${this.imgSrc}"
+          src="${imgSrc}"
           alt="${this.label}"
           loading="${this.loading}"
           fetchpriority="${this.fetchPriority}"
