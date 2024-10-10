@@ -147,14 +147,14 @@ export class unSdg extends DDDSuper(LitElement) {
 
   render() {
     // Sets the image source according to what number the goal is
-    let imgSrc = new URL(`/svgs/goal-${this.goal}.svg`, import.meta.url).href;
+    let imgSrc = new URL(`./svgs/goal-${this.goal}.svg`, import.meta.url).href;
     // If the goal is all, set it to the all svg
     if (this.goal === 'all') {
-      imgSrc = new URL(`/svgs/${this.goal}.svg`, import.meta.url).href;
+      imgSrc = new URL(`./svgs/${this.goal}.svg`, import.meta.url).href;
     }
     // If the goal is circle, set it to the circle image
     else if (this.goal === 'circle') {
-      imgSrc = new URL(`/svgs/${this.goal}.png`, import.meta.url).href;
+      imgSrc = new URL(`./svgs/${this.goal}.png`, import.meta.url).href;
     }
 
     return html`
