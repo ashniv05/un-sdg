@@ -17,21 +17,20 @@ export class unSdg extends DDDSuper(LitElement) {
     this.loading = "lazy"
     this.fetchPriority = "low";
     this.colorOnly = "false";
-    this.isImageVisible = "true";
+    this.isImageVisible = true;
   }
 
   // sets variable types
   static get properties() {
     return {
-      goal: { type: String },
-      imgSrc: { type: String },
+      goal: { type: String, reflect: true },
       width: { type: String },
       height: { type: String },
       label: { type: String },
       loading: { type: String },
       fetchPriority: { type: String },
       colorOnly: { type: String },
-      isImageVisible: { type: String },
+      isImageVisible: { type: Boolean },
     };
   }
 
@@ -41,12 +40,8 @@ export class unSdg extends DDDSuper(LitElement) {
     css`
       :host {
         display: block;
-        /*
-        color: var(--ddd-theme-primary);
-        background-color: var(--ddd-theme-accent);
-        font-family: var(--ddd-font-navigation);
-        font-size: var(--un-sdg-font-size, var(--ddd-font-size-s));
-        */
+        --width: 254px;
+        --height: 254px;
         width: var(--width, 254px);
         height: var(--height, 254px);
         background-color: white;
@@ -68,11 +63,10 @@ export class unSdg extends DDDSuper(LitElement) {
         --un-sdg-goal-16: rgb(1, 85, 138);
         --un-sdg-goal-17: rgb(25, 54, 103);
       }
+
       .svg-wrapper {
-        /*
-        margin: var(--ddd-spacing-2);
-        padding: var(--ddd-spacing-4);
-        */
+        width: var(--width, 254px);
+        height: var(--height, 254px);
         padding: 0;
         margin: 0;
       }
@@ -85,19 +79,9 @@ export class unSdg extends DDDSuper(LitElement) {
 
   // When a value changes, this function runs
   updated(changedProperties) {
-    // When the 'width' is set, change the CSS --width property
-    if (changedProperties.has('width')) {
-      this.style.setProperty('--width', this.width);
-    }
-    // When the 'height' is set, change the CSS --height property
-    if (changedProperties.has('height')) {
-      this.style.setProperty('--height', this.height);
-    }
     // When a 'goal' is set, update the image, update the alt text, and update the color
     if (changedProperties.has('goal')) {
-      // this.updateImage();
       this.updateAlt();
-      this.updateColor();
     } 
     if (changedProperties.has('colorOnly') && this.colorOnly == "true") {
       this.isImageVisible = false;
@@ -129,62 +113,7 @@ export class unSdg extends DDDSuper(LitElement) {
     }
   }
 
-  updateColor() { 
-    const goal = this.getAttribute('goal'); 
-    switch (goal) {
-      case '1':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-1, white)');
-        break;
-      case '2':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-2, white)');
-        break;
-      case '3':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-3, white)');
-        break;
-      case '4':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-4, white)');
-        break;
-      case '5':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-5, white)');
-        break;
-      case '6':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-6, white)');
-        break;
-      case '7':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-7, white)');
-        break;
-      case '8':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-8, white)');
-        break;
-      case '9':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-9, white)');
-        break;
-      case '10':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-10, white)');
-        break;
-      case '11':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-11, white)');
-        break;
-      case '12':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-12, white)');
-        break;
-      case '13':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-13, white)');
-        break;
-      case '14':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-14, white)');
-        break;
-      case '15':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-15, white)');
-        break;
-      case '16':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-16, white)');
-        break;
-      case '17':
-        this.style.setProperty('background-color', 'var(--un-sdg-goal-17, white)');
-        break;
-    }  
-  }
+  // Changes this.label (the alt text) according to what case it is
   updateAlt() {
     const goal = this.getAttribute('goal');
     switch (goal) {
@@ -249,16 +178,20 @@ export class unSdg extends DDDSuper(LitElement) {
   }
 
   render() {
+    // Sets the image source according to what number the goal is
     let imgSrc = new URL(`../lib/svgs/goal-${this.goal}.svg`, import.meta.url).href;
+    // If the goal is all, set it to the all svg
     if (this.goal === 'all') {
       imgSrc = new URL(`../lib/svgs/${this.goal}.svg`, import.meta.url).href;
     }
+    // If the goal is circle, set it to the circle image
     else if (this.goal === 'circle') {
       imgSrc = new URL(`../lib/svgs/${this.goal}.png`, import.meta.url).href;
     }
 
     return html`
-      <div class="svg-wrapper">
+      <!-- Updates the background-color according to the associated variable goal color -->
+      <div class="svg-wrapper" style="background-color: var(--un-sdg-goal-${this.goal})">
         <!-- Ternary. Only run <img/> if this.isImageVisible is true -->
         ${this.isImageVisible ? html `
           <img 
