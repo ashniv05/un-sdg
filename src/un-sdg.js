@@ -22,7 +22,7 @@ export class unSdg extends DDDSuper(LitElement) {
   // sets variable types
   static get properties() {
     return {
-      // reflect: true automatically changes the value according to attributes
+      // reflect: true automatically changes the value according to attributes. Binds properties to attributes.
       goal: { type: String, reflect: true },
       width: { type: String },
       height: { type: String },
@@ -61,7 +61,6 @@ export class unSdg extends DDDSuper(LitElement) {
         height: var(--height, 254px);
         background-color: white;
       }
-
       .svg-wrapper {
         width: var(--width, 254px);
         height: var(--height, 254px);
@@ -82,7 +81,6 @@ export class unSdg extends DDDSuper(LitElement) {
       this.updateAlt();
     } 
   }
-
   // Changes this.label (the alt text) according to what case it is
   updateAlt() {
     const goal = this.getAttribute('goal');
@@ -159,7 +157,6 @@ export class unSdg extends DDDSuper(LitElement) {
       imgSrc = new URL(`../lib/svgs/${this.goal}.png`, import.meta.url).href;
     }
 
-
     return html`
       <style>
         :host {
@@ -167,8 +164,8 @@ export class unSdg extends DDDSuper(LitElement) {
           --height: ${this.height};
         }
        </style>
-
       <!-- Updates the background-color according to the associated variable goal color -->
+      <!-- background-color is set to white for circle.png and all.svg since it's set to white on :host -->
       <div class="svg-wrapper" 
         style="background-color: var(--un-sdg-goal-${this.goal});"
         >
