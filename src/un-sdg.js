@@ -26,8 +26,8 @@ export class unSdg extends DDDSuper(LitElement) {
       width: { type: String },
       height: { type: String },
       label: { type: String },
-      loading: { type: String },
-      fetchPriority: { type: String },
+      loading: { type: String, reflect: true },
+      fetchPriority: { type: String, reflect: true },
       colorOnly: { type: Boolean },
     };
   }
@@ -81,28 +81,6 @@ export class unSdg extends DDDSuper(LitElement) {
     if (changedProperties.has('goal')) {
       this.updateAlt();
     } 
-    if (changedProperties.has('loading')) {
-      const loading = this.getAttribute('loading');
-      switch (loading) {
-        case 'lazy':
-          this.loading = "lazy";
-          break;
-        case 'eager':
-          this.loading = "eager";
-          break;
-      }
-    }
-    if (changedProperties.has('fetchPriority')) {
-      const fetchPriority = this.getAttribute('fetchPriority');
-      switch (fetchPriority) {
-        case 'low':
-          this.fetchPriority = "low";
-          break;
-        case 'high':
-          this.fetchPriority = "high";
-          break;
-      }
-    }
   }
 
   // Changes this.label (the alt text) according to what case it is
