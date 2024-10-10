@@ -16,8 +16,7 @@ export class unSdg extends DDDSuper(LitElement) {
     this.label = "";
     this.loading = "lazy"
     this.fetchPriority = "low";
-    this.colorOnly = "false";
-    this.isImageVisible = true;
+    this.colorOnly = false;
   }
 
   // sets variable types
@@ -29,8 +28,7 @@ export class unSdg extends DDDSuper(LitElement) {
       label: { type: String },
       loading: { type: String },
       fetchPriority: { type: String },
-      colorOnly: { type: String },
-      isImageVisible: { type: Boolean },
+      colorOnly: { type: Boolean },
     };
   }
 
@@ -83,12 +81,6 @@ export class unSdg extends DDDSuper(LitElement) {
     if (changedProperties.has('goal')) {
       this.updateAlt();
     } 
-    if (changedProperties.has('colorOnly') && this.colorOnly == "true") {
-      this.isImageVisible = false;
-    }
-    else if (changedProperties.has('colorOnly') && this.colorOnly == "false") {
-      this.isImageVisible = true;
-    }
     if (changedProperties.has('loading')) {
       const loading = this.getAttribute('loading');
       switch (loading) {
@@ -188,12 +180,8 @@ export class unSdg extends DDDSuper(LitElement) {
     else if (this.goal === 'circle') {
       imgSrc = new URL(`../lib/svgs/${this.goal}.png`, import.meta.url).href;
     }
-
-    return html`
-      <!-- Updates the background-color according to the associated variable goal color -->
-      <div class="svg-wrapper" style="background-color: var(--un-sdg-goal-${this.goal})">
-        <!-- Ternary. Only run <img/> if this.isImageVisible is true -->
-        ${this.isImageVisible ? html `
+    /*
+          ${this.isImageVisible ? html `
           <img 
           src="${imgSrc}"
           alt="${this.label}"
@@ -201,6 +189,20 @@ export class unSdg extends DDDSuper(LitElement) {
           fetchpriority="${this.fetchPriority}"
           />
         ` : ``}
+    */
+    return html`
+      <!-- Updates the background-color according to the associated variable goal color -->
+      <div class="svg-wrapper" style="background-color: var(--un-sdg-goal-${this.goal})">
+        <!-- Ternary. Only run <img/> if this.colorOnly is false -->
+        ${this.colorOnly ? `` : 
+          html `
+            <img 
+              src="${imgSrc}"
+              alt="${this.label}"
+              loading="${this.loading}"
+              fetchpriority="${this.fetchPriority}"
+            />
+        `}
       </div>
     `;
   }
