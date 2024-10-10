@@ -22,6 +22,7 @@ export class unSdg extends DDDSuper(LitElement) {
   // sets variable types
   static get properties() {
     return {
+      // reflect: true automatically changes the value according to attributes
       goal: { type: String, reflect: true },
       width: { type: String },
       height: { type: String },
@@ -37,12 +38,6 @@ export class unSdg extends DDDSuper(LitElement) {
     return [super.styles,
     css`
       :host {
-        display: block;
-        --width: 254px;
-        --height: 254px;
-        width: var(--width, 254px);
-        height: var(--height, 254px);
-        background-color: white;
         --un-sdg-goal-1: rgb(235, 28, 44);
         --un-sdg-goal-2: rgb(210, 160, 42);
         --un-sdg-goal-3: rgb(44, 155, 72);
@@ -60,6 +55,11 @@ export class unSdg extends DDDSuper(LitElement) {
         --un-sdg-goal-15: rgb(63, 175, 73);
         --un-sdg-goal-16: rgb(1, 85, 138);
         --un-sdg-goal-17: rgb(25, 54, 103);
+
+        display: block;
+        width: var(--width, 254px);
+        height: var(--height, 254px);
+        background-color: white;
       }
 
       .svg-wrapper {
@@ -77,7 +77,7 @@ export class unSdg extends DDDSuper(LitElement) {
 
   // When a value changes, this function runs
   updated(changedProperties) {
-    // When a 'goal' is set, update the image, update the alt text, and update the color
+    // When a 'goal' is set, update the alt text
     if (changedProperties.has('goal')) {
       this.updateAlt();
     } 
@@ -158,19 +158,20 @@ export class unSdg extends DDDSuper(LitElement) {
     else if (this.goal === 'circle') {
       imgSrc = new URL(`../lib/svgs/${this.goal}.png`, import.meta.url).href;
     }
-    /*
-          ${this.isImageVisible ? html `
-          <img 
-          src="${imgSrc}"
-          alt="${this.label}"
-          loading="${this.loading}"
-          fetchpriority="${this.fetchPriority}"
-          />
-        ` : ``}
-    */
+
+
     return html`
+      <style>
+        :host {
+          --width: ${this.width};
+          --height: ${this.height};
+        }
+       </style>
+
       <!-- Updates the background-color according to the associated variable goal color -->
-      <div class="svg-wrapper" style="background-color: var(--un-sdg-goal-${this.goal})">
+      <div class="svg-wrapper" 
+        style="background-color: var(--un-sdg-goal-${this.goal});"
+        >
         <!-- Ternary. Only run <img/> if this.colorOnly is false -->
         ${this.colorOnly ? `` : 
           html `
