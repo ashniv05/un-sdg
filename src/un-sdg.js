@@ -8,19 +8,21 @@ export class unSdg extends DDDSuper(LitElement) {
     return "un-sdg";
   }
 
+  // sets default variables
   constructor() {
     super();
     this.goal = "circle";
     this.imgSrc = "./lib/svgs/circle.png";
     this.width = "254px";
     this.height = "254px";
-    this.label = "Sustainable developments logo";
+    this.label = "";
     this.loading = "lazy"
     this.fetchPriority = "low";
     this.colorOnly = "false";
     this.isImageVisible = "true";
   }
 
+  // sets variable types
   static get properties() {
     return {
       goal: { type: String },
@@ -35,6 +37,7 @@ export class unSdg extends DDDSuper(LitElement) {
     };
   }
 
+  // sets styles including CSS properties
   static get styles() {
     return [super.styles,
     css`
@@ -75,9 +78,6 @@ export class unSdg extends DDDSuper(LitElement) {
         padding: 0;
         margin: 0;
       }
-      .hidden {
-        visibility: hidden;
-      }
       img {
         width: 100%;
         height: 100%;
@@ -85,15 +85,20 @@ export class unSdg extends DDDSuper(LitElement) {
     `];
   }
 
+  // When a value changes, this function runs
   updated(changedProperties) {
+    // When the 'width' is set, change the CSS --width property
     if (changedProperties.has('width')) {
       this.style.setProperty('--width', this.width);
     }
+    // When the 'height' is set, change the CSS --height property
     if (changedProperties.has('height')) {
       this.style.setProperty('--height', this.height);
     }
+    // When a 'goal' is set, update the image, update the alt text, and update the color
     if (changedProperties.has('goal')) {
-      this.updateImageandAlt();
+      this.updateImage();
+      this.updateAlt();
       this.updateColor();
     } 
     if (changedProperties.has('colorOnly') && this.colorOnly == "true") {
@@ -182,84 +187,127 @@ export class unSdg extends DDDSuper(LitElement) {
         break;
     }  
   }
-  updateImageandAlt() {
+  updateAlt() {
+    const goal = this.getAttribute('goal');
+    switch (goal) {
+      case 'circle':
+        this.label = "Sustainable developments logo";
+        break;
+      case 'all':
+        this.label = "Goal 1: No poverty, Goal 2: Zero hunger, Goal 3: Good health and well-being, Goal 4: Quality education, Goal 5: Gender equality, Goal 6: Clean water and sanitation, Goal 7: Affordable and clean energy, Goal 8: Decent work and economic growth, Goal 9: Industry, innovation and infrastructure, Goal 10: Reduced inequalities, Goal 11: Sustainable cities and communities, Goal 12: Responsible consumption and production, Goal 13: Climate action, Goal 14: Life below water, Goal 15: Life on land, Goal 16: Peace, justice and strong institutions, Goal 17: Partnerships for the goals";
+        break;
+      case '1':
+        this.label = "Goal 1: No poverty";
+        break;
+      case '2':
+        this.label = "Goal 2: Zero hunger";
+        break;
+      case '3':
+        this.label = "Goal 3: Good health and well-being";
+        break;
+      case '4':
+        this.label = "Goal 4: Quality education";
+        break;
+      case '5':
+        this.label = "Goal 5: Gender equality";
+        break;
+      case '6':
+        this.label = "Goal 6: Clean water and sanitation";
+        break;
+      case '7':
+        this.label = "Goal 7: Affordable and clean energy";
+        break;
+      case '8':
+        this.label = "Goal 8: Decent work and economic growth";
+        break;
+      case '9':
+        this.label = "Goal 9: Industry, innovation and infrastructure";
+        break;
+      case '10':
+        this.label = "Goal 10: Reduced inequalities";
+        break;
+      case '11':
+        this.label = "Goal 11: Sustainable cities and communities";
+        break;
+      case '12':
+        this.label = "Goal 12: Responsible consumption and production";
+        break;
+      case '13':
+        this.label = "Goal 13: Climate action";
+        break;
+      case '14':
+        this.label = "Goal 14: Life below water";
+        break;
+      case '15':
+        this.label = "Goal 15: Life on land";
+        break;
+      case '16':
+        this.label = "Goal 16: Peace, justice and strong institutions";
+        break;
+      case '17':
+        this.label = "Goal 17: Partnerships for the goals";
+        break; 
+    }
+  }
+  updateImage() {
     const goal = this.getAttribute('goal');
     switch (goal) {
       case 'circle':
         this.imgSrc = "./lib/svgs/circle.png";
-        this.label = "Sustainable developments logo";
         break;
       case 'all':
         this.imgSrc = "./lib/svgs/all.svg";
-        this.label = "Goal 1: No poverty, Goal 2: Zero hunger, Goal 3: Good health and well-being, Goal 4: Quality education, Goal 5: Gender equality, Goal 6: Clean water and sanitation, Goal 7: Affordable and clean energy, Goal 8: Decent work and economic growth, Goal 9: Industry, innovation and infrastructure, Goal 10: Reduced inequalities, Goal 11: Sustainable cities and communities, Goal 12: Responsible consumption and production, Goal 13: Climate action, Goal 14: Life below water, Goal 15: Life on land, Goal 16: Peace, justice and strong institutions, Goal 17: Partnerships for the goals";
         break;
       case '1':
         this.imgSrc = "./lib/svgs/goal-1.svg";
-        this.label = "Goal 1: No poverty";
         break;
       case '2':
         this.imgSrc = "./lib/svgs/goal-2.svg";
-        this.label = "Goal 2: Zero hunger";
         break;
       case '3':
         this.imgSrc = "./lib/svgs/goal-3.svg";
-        this.label = "Goal 3: Good health and well-being";
         break;
       case '4':
         this.imgSrc = "./lib/svgs/goal-4.svg";
-        this.label = "Goal 4: Quality education";
         break;
       case '5':
         this.imgSrc = "./lib/svgs/goal-5.svg";
-        this.label = "Goal 5: Gender equality";
         break;
       case '6':
         this.imgSrc = "./lib/svgs/goal-6.svg";
-        this.label = "Goal 6: Clean water and sanitation";
         break;
       case '7':
         this.imgSrc = "./lib/svgs/goal-7.svg";
-        this.label = "Goal 7: Affordable and clean energy";
         break;
       case '8':
         this.imgSrc = "./lib/svgs/goal-8.svg";
-        this.label = "Goal 8: Decent work and economic growth";
         break;
       case '9':
         this.imgSrc = "./lib/svgs/goal-9.svg";
-        this.label = "Goal 9: Industry, innovation and infrastructure";
         break;
       case '10':
         this.imgSrc = "./lib/svgs/goal-10.svg";
-        this.label = "Goal 10: Reduced inequalities";
         break;
       case '11':
         this.imgSrc = "./lib/svgs/goal-11.svg";
-        this.label = "Goal 11: Sustainable cities and communities";
         break;
       case '12':
         this.imgSrc = "./lib/svgs/goal-12.svg";
-        this.label = "Goal 12: Responsible consumption and production";
         break;
       case '13':
         this.imgSrc = "./lib/svgs/goal-13.svg";
-        this.label = "Goal 13: Climate action";
         break;
       case '14':
         this.imgSrc = "./lib/svgs/goal-14.svg";
-        this.label = "Goal 14: Life below water";
         break;
       case '15':
         this.imgSrc = "./lib/svgs/goal-15.svg";
-        this.label = "Goal 15: Life on land";
         break;
       case '16':
         this.imgSrc = "./lib/svgs/goal-16.svg";
-        this.label = "Goal 16: Peace, justice and strong institutions";
         break;
       case '17':
         this.imgSrc = "./lib/svgs/goal-17.svg";
-        this.label = "Goal 17: Partnerships for the goals";
         break;
     }
   }
@@ -269,13 +317,15 @@ export class unSdg extends DDDSuper(LitElement) {
   render() {
     return html`
       <div class="svg-wrapper">
-        <img 
-        class="${this.isImageVisible ? '' : 'hidden'}"
-        src="${this.imgSrc}"
-        alt="${this.label}"
-        loading="${this.loading}"
-        fetchpriority="${this.fetchPriority}"
-        />
+        <!-- Ternary. Only run <img/> if this.isImageVisible is true -->
+        ${this.isImageVisible ? html `
+          <img 
+          src="${this.imgSrc}"
+          alt="${this.label}"
+          loading="${this.loading}"
+          fetchpriority="${this.fetchPriority}"
+          />
+        ` : ``}
       </div>
     `;
   }
