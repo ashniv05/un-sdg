@@ -1,66 +1,52 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <base href="/" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="Description" content="Demonstration for un_sdg" />
+    <style>
+      :root,
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #demo {
+        padding: 16px;
+      }
+      un-sdg {
+        display: block;
+        margin: 16px 0;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+    </style>
+    <title>UN SDG Goals</title>
+  </head>
 
-<head>
-  <base href="/">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="Description" content="Demonstration for un_sdg">
+  <body>
+    <div id="demo">
+      <h1>UN Sustainable Development Goals</h1>
+      <un-sdg goal="2"></un-sdg>
+      <un-sdg goal="5" color-only></un-sdg>
+      <button id="randomGoalBttn">Goal</button>
+    </div>
 
-  <style>
-    :root, html, body {
-      margin: 0;
-      padding: 0;
-    }
-    #demo {
-      padding: 16px;
-    }
-    un-sdg:hover
-    un-sdg {
-      display: block;
-      margin: 16px 0;
-    }
-  
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-    }
-    
-  </style>
-  <title>UN SDG Goals</title>
-</head>
+    <script type="module" src="./src/un_sdg.js"></script>
+    <script>
+      const randomGoalBttn = document.getElementById("randomGoalBttn");
+      const sdgElement = document.querySelector("un-sdg");
 
-<body>
-  <div id="demo">
-    <h1>un-sdg</h1>
-  </style>
-  <title>SDG Goals</title>
-</head>
-
-<body>
-  <div id="demo">
-    <h1>UN Sustainable Development Goals</h1>
-
-    <un-sdg goal="2"></un-sdg>
-  
-    <un-sdg goal="5" color-only></un-sdg>
-
-    <button id="randomGoalBttn">Goal</button>
-
-  <script type="module" src="./src/un_sdg.js"></script>
-</div>
-
-
-<script>
-
-  const randomGoalBttn = document.getElementById('randomGoalBtn');
-  const sdgElement = document.querySelector('un-sdg');
-
-  randomGoalBttn.addEventListener('click', () => {
-    const randomGoal = Math.floor(Math.random() * 17) + 1; 
-    sdgElement.setAttribute('goal', randomGoal);
-  });
-</script>
-</body>
-
+      randomGoalBttn.addEventListener("click", () => {
+        const randomGoal = Math.floor(Math.random() * 17) + 1;
+        sdgElement.setAttribute("goal", randomGoal);
+      });
+    </script>
+  </body>
 </html>
